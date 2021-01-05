@@ -29,7 +29,6 @@ public class Knight extends Piece{
         
             // if valid tile coordinate
             if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
-                final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
                 if(isFirstColumnException(this.piecePosition, currentCandidateOffset) || 
                         isSecondColumnException(this.piecePosition, currentCandidateOffset) || 
@@ -38,6 +37,7 @@ public class Knight extends Piece{
                     continue;
                 }
 
+                final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
                 if(!candidateDestinationTile.isTileOccupied()){
                     legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
                 }
