@@ -11,11 +11,11 @@ import com.chess.engine.board.Tile;
 import com.chess.engine.board.Move.*;
 import com.google.common.collect.ImmutableList;
 
-public class Bishop extends Piece{
+public class Queen extends Piece {
 
-    private final static int[] CANDIDATE_MOVE_COORDINATES = {-9, -7, 7, 9};
-
-    Bishop(int piecePosition, Colour pieceColour) {
+    private final static int[] CANDIDATE_MOVE_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9};
+    
+    Queen(int piecePosition, Colour pieceColour) {
         super(piecePosition, pieceColour);
     }
 
@@ -57,12 +57,12 @@ public class Bishop extends Piece{
         return ImmutableList.copyOf(legalMoves);
     }
 
-    // Exceptions for bishop movement
+    // Exceptions for queen movement
     private static boolean isFirstColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.FIRST_COLUMN[currentPos] && ((candidateOffset == -9) || (candidateOffset == 7));
+        return BoardUtils.FIRST_COLUMN[currentPos] && (candidateOffset == -1 || candidateOffset == -9 || candidateOffset == 7);
     }
 
     private static boolean isEighthColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.EIGHTH_COLUMN[currentPos] && ((candidateOffset == -7) || (candidateOffset == 9));
+        return BoardUtils.EIGHTH_COLUMN[currentPos] && (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
     }
 }
