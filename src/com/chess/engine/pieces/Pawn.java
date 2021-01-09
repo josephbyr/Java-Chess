@@ -15,29 +15,36 @@ public class Pawn extends Piece{
 
     private final static int[] CANDIDATE_MOVE_COORDINATES = {8};
 
-    Pawn(int piecePosition, Colour pieceColour) {
+    Pawn(final int piecePosition, final Colour pieceColour) {
         super(piecePosition, pieceColour);
     }
 
     @Override
-    public List<Move> calcLegalMoves(Board board) {
+    public List<Move> calcLegalMoves(final Board board) {
         
         final List<Move> legalMoves = new ArrayList<>();
         
         for(final int currentCandidateOffset: CANDIDATE_MOVE_COORDINATES){
-            int candidateDestinationCoordinate = this.piecePosition + (this.getPieceColour().getDirection() * currentCandidateOffset);
+            final int candidateDestinationCoordinate = this.piecePosition + (this.getPieceColour().getDirection() * currentCandidateOffset);
 
             if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
                 continue;
             }
 
             if(currentCandidateOffset == 8 && board.getTile(candidateDestinationCoordinate).isTileOccupied()){
-                // TODO more here!
+                // TODO deal with promotions
                 legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
+            } 
+            else if(currentCandidateOffset == 16 && this.isFirstMove() && 
+                    (BoardUtils.SECOND_ROW[this.piecePosition] && this.getPieceColour().isBlack()) || 
+                    (BoardUtils.SEVENTH_ROW[this.piecePosition] && this.getPieceColour().isWhite())){
+                final int behindCandidateDestinationCoordinate = this.piecePosition + (this.pieceColour.getDirection() * 8);
+                if(!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() && 
+                    !board.getTile(candidateDestinationCoordinate).isTileOccupied()){
+                        legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
+                }
             }
         }
-
         return null;
     }
-    
 }
