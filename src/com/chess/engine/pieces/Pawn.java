@@ -7,13 +7,12 @@ import com.chess.engine.Colour;
 import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
-import com.chess.engine.board.Tile;
 import com.chess.engine.board.Move.*;
 import com.google.common.collect.ImmutableList;
 
 public class Pawn extends Piece{
 
-    private final static int[] CANDIDATE_MOVE_COORDINATES = {8};
+    private final static int[] CANDIDATE_MOVE_COORDINATES = {8, 16, 7, 9};
 
     Pawn(final int piecePosition, final Colour pieceColour) {
         super(piecePosition, pieceColour);
@@ -25,7 +24,7 @@ public class Pawn extends Piece{
         final List<Move> legalMoves = new ArrayList<>();
         
         for(final int currentCandidateOffset: CANDIDATE_MOVE_COORDINATES){
-            final int candidateDestinationCoordinate = this.piecePosition + (this.getPieceColour().getDirection() * currentCandidateOffset);
+            final int candidateDestinationCoordinate = this.piecePosition + (this.pieceColour.getDirection() * currentCandidateOffset);
 
             if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
                 continue;
@@ -44,7 +43,31 @@ public class Pawn extends Piece{
                         legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
                 }
             }
+            // if pawn is on respective right hand side edge of board and isn't in an exception movement case
+            else if(currentCandidateOffset == 7 &&
+                    !((BoardUtils.EIGHTH_COLUMN[this.piecePosition] && this.getPieceColour().isWhite() || 
+                    (BoardUtils.FIRST_COLUMN[this.piecePosition] && this.getPieceColour().isBlack())))){
+                if(board.getTile(candidateDestinationCoordinate).isTileOccupied()){
+                    final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+                    if(this.pieceColour != pieceOnCandidate.getPieceColour()){
+                        // TODO more here!
+                        legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
+                    }
+                }
+            }
+            // if pawn is on respective left hand edge of board and isn't in an exception movement case
+            else if(currentCandidateOffset == 9 && 
+                    !((BoardUtils.FIRST_COLUMN[this.piecePosition] && this.getPieceColour().isWhite() || 
+                    (BoardUtils.EIGHTH_COLUMN[this.piecePosition] && this.getPieceColour().isBlack())))){
+                if(board.getTile(candidateDestinationCoordinate).isTileOccupied()){
+                    final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+                    if(this.pieceColour != pieceOnCandidate.getPieceColour()){
+                        // TODO more here!
+                        legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
+                    }
+                }
+            }
         }
-        return null;
+        return ImmutableList.copyOf(legalMoves);
     }
 }
