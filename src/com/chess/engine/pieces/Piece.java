@@ -11,9 +11,9 @@ public abstract class Piece {
     protected final Colour pieceColour;
     protected final boolean isFirstMove;
 
-    Piece(final int piecePosition, final Colour pieceColour){
-        this.piecePosition = piecePosition;
+    Piece(final Colour pieceColour, final int piecePosition){
         this.pieceColour = pieceColour;
+        this.piecePosition = piecePosition;
         // TODO more here!
         this.isFirstMove = false;
     }

@@ -15,8 +15,8 @@ public class Knight extends Piece{
     // https://www.chessprogramming.org/Knight_Pattern
     private final static int[] CANDIDATE_MOVE_COORDINATES = {-17, -15, -10, -6, 6, 10, 15, 17};
 
-    Knight(int piecePosition, Colour pieceColour){
-        super(piecePosition, pieceColour);
+    public Knight(final Colour pieceColour, final int piecePosition) {
+        super(pieceColour, piecePosition);
     }
 
     @Override

@@ -15,8 +15,8 @@ public class Queen extends Piece {
 
     private final static int[] CANDIDATE_MOVE_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9};
     
-    Queen(int piecePosition, Colour pieceColour) {
-        super(piecePosition, pieceColour);
+    public Queen(final Colour pieceColour, final int piecePosition) {
+        super(pieceColour, piecePosition);
     }
 
     @Override
