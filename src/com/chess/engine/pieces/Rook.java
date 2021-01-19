@@ -57,6 +57,11 @@ public class Rook extends Piece{
         return ImmutableList.copyOf(legalMoves);
     }
 
+    @Override
+    public String toString(){
+        return PieceType.ROOK.toString();
+    }
+
     // Exceptions for rook movement
     private static boolean isFirstColumnException(final int currentPos, final int candidateOffset){
         return BoardUtils.FIRST_COLUMN[currentPos] && candidateOffset == -1;

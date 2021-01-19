@@ -57,6 +57,11 @@ public class Bishop extends Piece{
         return ImmutableList.copyOf(legalMoves);
     }
 
+    @Override
+    public String toString(){
+        return PieceType.BISHOP.toString();
+    }
+
     // Exceptions for bishop movement
     private static boolean isFirstColumnException(final int currentPos, final int candidateOffset){
         return BoardUtils.FIRST_COLUMN[currentPos] && ((candidateOffset == -9) || (candidateOffset == 7));

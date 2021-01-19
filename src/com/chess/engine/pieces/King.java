@@ -46,6 +46,12 @@ public class King extends Piece{
         }
         return ImmutableList.copyOf(legalMoves);
     }
+
+    @Override
+    public String toString(){
+        return PieceType.KING.toString();
+    }
+
     // movement exceptions for king
     private static boolean isFirstColumnException(final int currentPos, final int candidateOffset){
         return BoardUtils.FIRST_COLUMN[currentPos] && (candidateOffset == -9 || candidateOffset == -1 || 
