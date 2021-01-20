@@ -7,11 +7,15 @@ import com.chess.engine.board.Move;
 import java.util.List;
 
 public abstract class Piece {
+    protected final PieceType pieceType;
     protected final int piecePosition;
     protected final Colour pieceColour;
     protected final boolean isFirstMove;
 
-    Piece(final Colour pieceColour, final int piecePosition){
+    Piece(final PieceType pieceType,
+          final Colour pieceColour, 
+          final int piecePosition){
+        this.pieceType = pieceType;
         this.pieceColour = pieceColour;
         this.piecePosition = piecePosition;
         // TODO more here!
@@ -28,6 +32,10 @@ public abstract class Piece {
 
     public boolean isFirstMove(){
         return this.isFirstMove;
+    }
+
+    public PieceType getPieceType(){
+        return this.pieceType;
     }
 
     public abstract List<Move>calcLegalMoves(final Board board);
