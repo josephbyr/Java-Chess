@@ -27,6 +27,10 @@ public abstract class Player {
         this.isInCheck = !Player.clacAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
     }
 
+    public Collection<Move> getLegalMoves(){
+        return this.legalMoves;
+    }
+
     private static Collection<Move> clacAttacksOnTile(int piecePosition, Collection<Move> moves) {
         final List<Move> attackMoves = new ArrayList<>();
         for(final Move move : moves){
@@ -44,6 +48,10 @@ public abstract class Player {
             }
         }
         throw new RuntimeException("Not a valid board");
+    }
+
+    public King getPlayerKing(){
+        return this.playerKing;
     }
 
     public boolean isMoveLegal(final Move move){
@@ -79,8 +87,25 @@ public abstract class Player {
         return false;
     }
 
+    // to calculate attacks on king
+    // makes move, switches to other player, checks where previous player's king's position
+    // is and calculates if current player has any attacks on the king now
     public MoveTransition makeMove(final Move move){
-        return null;
+        
+        if(!isMoveLegal(move)){
+            return new MoveTransition(this.board, move, MoveStatus.ILLEGAL_MOVE);
+        }
+
+        final Board transitionBoard = move.execute();
+        
+        final Collection<Move> kingAttacks = Player.clacAttacksOnTile(transitionBoard.currentPlayer().getOpponent().getPlayerKing().getPiecePosition(), 
+            transitionBoard.currentPlayer().getLegalMoves());
+
+        if(kingAttacks.isEmpty()){
+            return new MoveTransition(this.board, move, MoveStatus.LEAVES_PLAYER_IN_CHECK);
+        }
+
+        return new MoveTransition(transitionBoard, move, MoveStatus.DONE);
     }
 
     public abstract Collection<Piece> getActivePieces();

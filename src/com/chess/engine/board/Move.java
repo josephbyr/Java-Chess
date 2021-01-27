@@ -17,11 +17,19 @@ public abstract class Move {
 		return this.destinationCoordinate;
 	}
 
+    public abstract Board execute();
+
     public static final class NonAttackMove extends Move{
         public NonAttackMove(  final Board board, 
                     final Piece movedPiece, 
                     final int destinationCoordinate){
             super(board, movedPiece, destinationCoordinate);
+        }
+
+        @Override
+        public Board execute() {
+            // TODO Auto-generated method stub
+            return null;
         }
     }
 
@@ -33,6 +41,12 @@ public abstract class Move {
                     final Piece attackedPiece){
             super(board, movedPiece, destinationCoordinate);
             this.attackedPiece = attackedPiece;
+        }
+        
+        @Override
+        public Board execute() {
+            // TODO Auto-generated method stub
+            return null;
         }
     }
 }
