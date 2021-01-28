@@ -28,8 +28,20 @@ public abstract class Move {
 
         @Override
         public Board execute() {
-            // TODO Auto-generated method stub
-            return null;
+            final Board.Builder builder = new Board.Builder();
+            for(final Piece piece: this.board.currentPlayer().getActivePieces()){
+                // TODO hashcode and equals for pieces
+                if(!this.movedPiece.equals(piece)){
+                    builder.setPiece(piece);
+                }
+            }
+            for(final Piece piece: this.board.currentPlayer().getOpponent().getActivePieces()){
+                builder.setPiece(piece);
+            }
+            // move the moved piece
+            builder.setPiece(null);
+            builder.setMoveMaker(this.board.currentPlayer().getOpponent().getColour());
+            return builder.build();
         }
     }
 
@@ -42,7 +54,7 @@ public abstract class Move {
             super(board, movedPiece, destinationCoordinate);
             this.attackedPiece = attackedPiece;
         }
-        
+
         @Override
         public Board execute() {
             // TODO Auto-generated method stub
