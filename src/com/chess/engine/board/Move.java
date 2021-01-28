@@ -17,6 +17,10 @@ public abstract class Move {
 		return this.destinationCoordinate;
 	}
 
+    public Piece getMovedPiece(){
+        return this.movedPiece;
+    }
+
     public abstract Board execute();
 
     public static final class NonAttackMove extends Move{
@@ -39,7 +43,8 @@ public abstract class Move {
                 builder.setPiece(piece);
             }
             // move the moved piece
-            builder.setPiece(null);
+            builder.setPiece(this.movedPiece.movePiece(this));
+            // switch to next player's turn
             builder.setMoveMaker(this.board.currentPlayer().getOpponent().getColour());
             return builder.build();
         }

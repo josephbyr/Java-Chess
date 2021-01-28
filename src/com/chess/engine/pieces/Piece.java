@@ -40,6 +40,8 @@ public abstract class Piece {
 
     public abstract List<Move>calcLegalMoves(final Board board);
 
+    public abstract Piece movePiece(Move move);
+
     public enum PieceType{
 
         PAWN("P"),
