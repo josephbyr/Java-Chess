@@ -15,6 +15,14 @@ public abstract class Tile{
         this.tileCoordinate = tileCoordinate;
     }
 
+    public abstract boolean isTileOccupied();
+
+    public abstract Piece getPiece();
+
+    public int getTileCoordinate() {
+        return this.tileCoordinate;
+    }
+    
     // cache all possible unoccupied tiles
     private static Map<Integer, EmptyTile> createAllPossibleEmptyTiles() {
         final Map<Integer, EmptyTile> EmptyTileMap = new HashMap<>();
@@ -28,10 +36,6 @@ public abstract class Tile{
     public static Tile createTile(final int tileCoordinate, final Piece piece){
         return piece != null ? new OccupiedTile(tileCoordinate, piece) : EMPTY_TILES_CACHE.get(tileCoordinate);
     }
-
-    public abstract boolean isTileOccupied();
-
-    public abstract Piece getPiece();
 
     public static final class EmptyTile extends Tile{
         private EmptyTile(final int coordinate){
