@@ -23,6 +23,9 @@ public class Table {
     private final static Dimension BOARD_PANEL_SIZE = new Dimension(400, 350);
     private final static Dimension TILE_PANEL_SIZE = new Dimension(10, 10);
 
+    private final Color lightTileColour = Color.decode("#F0D9B5");
+    private final Color darkTileColour = Color.decode("#946f51");
+
     public Table(){
         this.gameFrame = new JFrame("Chess");
         this.gameFrame.setLayout(new BorderLayout());
@@ -50,6 +53,16 @@ public class Table {
             }
         });
         fileMenu.add(openPGN);
+
+        final JMenuItem exitMenuitem = new JMenuItem("Exit");
+        exitMenuitem.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        fileMenu.add(exitMenuitem);
+
         return fileMenu;
     }
 
@@ -70,7 +83,7 @@ public class Table {
     }
 
     private class TilePanel extends JPanel{
-        
+
         private final int tileId;
 
         TilePanel(final BoardPanel boardPanel, final int tileId){
@@ -82,6 +95,20 @@ public class Table {
         }
 
         private void setTileColour() {
+            boolean isLight = ((tileId + tileId / 8) % 2 == 0);
+            setBackground(isLight ? lightTileColour : darkTileColour);
+            // if(BoardUtils.EIGHTH_ROW[this.tileId] || 
+            //         BoardUtils.SIXTH_ROW[this.tileId] || 
+            //         BoardUtils.FOURTH_ROW[this.tileId] || 
+            //         BoardUtils.SECOND_ROW[this.tileId]){
+            //     setBackground(this.tileId % 2 == 0 ? lightTileColour : darkTileColour);
+            // }
+            // else if(BoardUtils.SEVENTH_ROW[this.tileId] || 
+            //         BoardUtils.FIFTH_ROW[this.tileId] || 
+            //         BoardUtils.THIRD_ROW[this.tileId] || 
+            //         BoardUtils.FIRST_ROW[this.tileId]){
+            //     setBackground(this.tileId % 2 != 0 ? lightTileColour : darkTileColour);
+            // }
         }
     }
 }
