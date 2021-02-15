@@ -69,10 +69,10 @@ public class Queen extends Piece {
 
     // Exceptions for queen movement
     private static boolean isFirstColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.FIRST_COLUMN[currentPos] && (candidateOffset == -1 || candidateOffset == -9 || candidateOffset == 7);
+        return BoardUtils.FIRST_FILE[currentPos] && (candidateOffset == -1 || candidateOffset == -9 || candidateOffset == 7);
     }
 
     private static boolean isEighthColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.EIGHTH_COLUMN[currentPos] && (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
+        return BoardUtils.EIGHTH_FILE[currentPos] && (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
     }
 }

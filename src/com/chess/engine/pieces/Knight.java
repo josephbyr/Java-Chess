@@ -67,20 +67,20 @@ public class Knight extends Piece{
 
     // Exceptions for knight movement
     private static boolean isFirstColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.FIRST_COLUMN[currentPos] && ((candidateOffset == -17) || (candidateOffset == -10) || 
+        return BoardUtils.FIRST_FILE[currentPos] && ((candidateOffset == -17) || (candidateOffset == -10) || 
         (candidateOffset == 6) || (candidateOffset == 15));
     }
 
     private static boolean isSecondColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.SECOND_COLUMN[currentPos] && ((candidateOffset == -10) || (candidateOffset == 6));
+        return BoardUtils.SECOND_FILE[currentPos] && ((candidateOffset == -10) || (candidateOffset == 6));
     }
 
     private static boolean isSeventhColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.SEVENTH_COLUMN[currentPos] && ((candidateOffset == -6) || (candidateOffset == 10));
+        return BoardUtils.SEVENTH_FILE[currentPos] && ((candidateOffset == -6) || (candidateOffset == 10));
     }
 
     private static boolean isEighthColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.EIGHTH_COLUMN[currentPos] && ((candidateOffset == -15) || (candidateOffset == -6) || 
+        return BoardUtils.EIGHTH_FILE[currentPos] && ((candidateOffset == -15) || (candidateOffset == -6) || 
         (candidateOffset == 10) || (candidateOffset == 17));
     }
 }

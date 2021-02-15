@@ -69,10 +69,10 @@ public class Rook extends Piece{
 
     // Exceptions for rook movement
     private static boolean isFirstColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.FIRST_COLUMN[currentPos] && candidateOffset == -1;
+        return BoardUtils.FIRST_FILE[currentPos] && candidateOffset == -1;
     }
 
     private static boolean isEighthColumnException(final int currentPos, final int candidateOffset){
-        return BoardUtils.EIGHTH_COLUMN[currentPos] && (candidateOffset == 1);
+        return BoardUtils.EIGHTH_FILE[currentPos] && (candidateOffset == 1);
     }
 }

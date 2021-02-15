@@ -2,17 +2,25 @@ package com.chess.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class Table {
     
@@ -94,21 +102,25 @@ public class Table {
             validate();
         }
 
+        private void setPieceIcon(final Board board) throws IOException{
+            this.removeAll();
+            if(board.getTile(this.tileId).isTileOccupied()){
+                String pieceIconPath = "";
+                try{
+                final BufferedImage image = 
+                    ImageIO.read(new File(pieceIconPath + board.getTile(this.tileId).getPiece().getPieceColour().toString().substring(0, 1) + 
+                    board.getTile(this.tileId).getPiece().toString() + ".svg"));
+                    add(new JLabel(new ImageIcon(image)));
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
         private void setTileColour() {
             boolean isLight = ((tileId + tileId / 8) % 2 == 0);
             setBackground(isLight ? lightTileColour : darkTileColour);
-            // if(BoardUtils.EIGHTH_ROW[this.tileId] || 
-            //         BoardUtils.SIXTH_ROW[this.tileId] || 
-            //         BoardUtils.FOURTH_ROW[this.tileId] || 
-            //         BoardUtils.SECOND_ROW[this.tileId]){
-            //     setBackground(this.tileId % 2 == 0 ? lightTileColour : darkTileColour);
-            // }
-            // else if(BoardUtils.SEVENTH_ROW[this.tileId] || 
-            //         BoardUtils.FIFTH_ROW[this.tileId] || 
-            //         BoardUtils.THIRD_ROW[this.tileId] || 
-            //         BoardUtils.FIRST_ROW[this.tileId]){
-            //     setBackground(this.tileId % 2 != 0 ? lightTileColour : darkTileColour);
-            // }
         }
     }
 }

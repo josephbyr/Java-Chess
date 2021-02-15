@@ -10,6 +10,7 @@ import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.pieces.Rook;
+import com.chess.engine.pieces.Piece.PieceType;
 import com.google.common.collect.ImmutableList;
 
 public class BlackPlayer extends Player{
@@ -49,7 +50,7 @@ public class BlackPlayer extends Player{
                 if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()){
                     if( Player.clacAttacksOnTile(5, opponentLegals).isEmpty() && 
                         Player.clacAttacksOnTile(6, opponentLegals).isEmpty() && 
-                        rookTile.getPiece().getPieceType() == Piece.PieceType.ROOK){
+                        rookTile.getPiece().getPieceType() == PieceType.ROOK){
                         kingCastles.add(new Move.KingSideCastleMove(this.board, 
                                                                     this.playerKing, 
                                                                     6, 
@@ -64,7 +65,10 @@ public class BlackPlayer extends Player{
                !this.board.getTile(3).isTileOccupied()){
 
                 final Tile rookTile = this.board.getTile(0);
-                if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()){
+                if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove() && 
+                   Player.clacAttacksOnTile(2, opponentLegals).isEmpty() && 
+                   Player.clacAttacksOnTile(3, opponentLegals).isEmpty() && 
+                   rookTile.getPiece().getPieceType() == PieceType.ROOK){
                     kingCastles.add(new Move.KingSideCastleMove(this.board, 
                                                                 this.playerKing, 
                                                                 2, 
