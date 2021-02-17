@@ -26,10 +26,13 @@ public class Table {
     
     private final JFrame gameFrame;
     private final BoardPanel boardPanel;
+    private final Board chessBoard;
 
     private final static Dimension OUTER_FRAME_SIZE = new Dimension(600, 600);
     private final static Dimension BOARD_PANEL_SIZE = new Dimension(400, 350);
     private final static Dimension TILE_PANEL_SIZE = new Dimension(10, 10);
+    private static String defaultPieceIconPath = "art/";
+
 
     private final Color lightTileColour = Color.decode("#F0D9B5");
     private final Color darkTileColour = Color.decode("#946f51");
@@ -41,6 +44,7 @@ public class Table {
         createMenuBar(menuBar);
         this.gameFrame.setJMenuBar(menuBar);
         this.gameFrame.setSize(OUTER_FRAME_SIZE);
+        this.chessBoard = Board.createInitialBoard();
         this.boardPanel = new BoardPanel();
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
 
@@ -99,17 +103,18 @@ public class Table {
             this.tileId = tileId;
             setPreferredSize(TILE_PANEL_SIZE);
             setTileColour();
+            setPieceIcon(chessBoard);
             validate();
         }
 
-        private void setPieceIcon(final Board board) throws IOException{
+        private void setPieceIcon(final Board board){
             this.removeAll();
             if(board.getTile(this.tileId).isTileOccupied()){
-                String pieceIconPath = "";
                 try{
-                final BufferedImage image = 
-                    ImageIO.read(new File(pieceIconPath + board.getTile(this.tileId).getPiece().getPieceColour().toString().substring(0, 1) + 
-                    board.getTile(this.tileId).getPiece().toString() + ".svg"));
+                BufferedImage image = 
+                    ImageIO.read(new File(defaultPieceIconPath + board.getTile(this.tileId).getPiece().getPieceColour().toString().substring(0, 1).toLowerCase() + 
+                    board.getTile(this.tileId).getPiece().toString() + ".png"));
+                    image = resize(image, 60, 60);
                     add(new JLabel(new ImageIcon(image)));
                 }
                 catch(IOException e){
@@ -117,6 +122,17 @@ public class Table {
                 }
             }
         }
+
+        public BufferedImage resize(BufferedImage img, int newW, int newH) { 
+            Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+            BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+        
+            Graphics2D g2d = dimg.createGraphics();
+            g2d.drawImage(tmp, 0, 0, null);
+            g2d.dispose();
+        
+            return dimg;
+        }  
 
         private void setTileColour() {
             boolean isLight = ((tileId + tileId / 8) % 2 == 0);
