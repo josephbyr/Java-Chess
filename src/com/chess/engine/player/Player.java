@@ -2,6 +2,7 @@ package com.chess.engine.player;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.chess.engine.Colour;
@@ -25,6 +26,7 @@ public abstract class Player {
         this.board = board;
         this.playerKing = establishKing();
         this.legalMoves = ImmutableList.copyOf(Iterables.concat(legalMoves, calculateKingCastles(legalMoves, opponentMoves)));
+        // this.legalMoves = Collections.unmodifiableCollection(legalMoves);
         this.isInCheck = !Player.clacAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
     }
 
@@ -32,7 +34,7 @@ public abstract class Player {
         return this.legalMoves;
     }
 
-    protected static Collection<Move> clacAttacksOnTile(int piecePosition, Collection<Move> moves) {
+    protected static Collection<Move> clacAttacksOnTile(final int piecePosition, final Collection<Move> moves) {
         final List<Move> attackMoves = new ArrayList<>();
         for(final Move move : moves){
             if(piecePosition == move.getDestinationCoordinate()){
@@ -102,7 +104,7 @@ public abstract class Player {
         final Collection<Move> kingAttacks = Player.clacAttacksOnTile(transitionBoard.currentPlayer().getOpponent().getPlayerKing().getPiecePosition(), 
             transitionBoard.currentPlayer().getLegalMoves());
 
-        if(kingAttacks.isEmpty()){
+        if(!kingAttacks.isEmpty()){
             return new MoveTransition(this.board, move, MoveStatus.LEAVES_PLAYER_IN_CHECK);
         }
 

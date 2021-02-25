@@ -20,7 +20,7 @@ public abstract class Piece {
         this.pieceColour = pieceColour;
         this.piecePosition = piecePosition;
         // TODO more here!
-        this.isFirstMove = false;
+        this.isFirstMove = true;
         this.cachedHashCode = computeHashCode();
     }
 

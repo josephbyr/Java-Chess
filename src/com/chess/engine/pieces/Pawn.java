@@ -24,16 +24,16 @@ public class Pawn extends Piece{
         final List<Move> legalMoves = new ArrayList<>();
         
         for(final int currentCandidateOffset: CANDIDATE_MOVE_COORDINATES){
-            final int candidateDestinationCoordinate = this.piecePosition + (this.pieceColour.getDirection() * currentCandidateOffset);
+            int candidateDestinationCoordinate = this.piecePosition + (this.pieceColour.getDirection() * currentCandidateOffset);
 
-            if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
+            if(!BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
                 continue;
             }
 
-            if(currentCandidateOffset == 8 && board.getTile(candidateDestinationCoordinate).isTileOccupied()){
+            if(currentCandidateOffset == 8 && !board.getTile(candidateDestinationCoordinate).isTileOccupied()){
                 // TODO deal with promotions
                 legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
-            } 
+            }
             else if(currentCandidateOffset == 16 && this.isFirstMove() && 
                     (BoardUtils.SECOND_RANK[this.piecePosition] && this.getPieceColour().isBlack()) || 
                     (BoardUtils.SEVENTH_RANK[this.piecePosition] && this.getPieceColour().isWhite())){

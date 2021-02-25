@@ -33,7 +33,7 @@ public class Table {
     
     private final JFrame gameFrame;
     private final BoardPanel boardPanel;
-    private final Board chessBoard;
+    private Board chessBoard;
 
     private Tile sourceTile;
     private Tile destinationTile;
@@ -103,6 +103,16 @@ public class Table {
             setPreferredSize(BOARD_PANEL_SIZE);
             validate();
         }
+
+        public void drawBoard(final Board board){
+            removeAll();
+            for(final TilePanel tilePanel : boardTiles){
+                tilePanel.drawTile(board);
+                add(tilePanel);
+            }
+            validate();
+            repaint();
+        }
     }
 
     private class TilePanel extends JPanel{
@@ -117,9 +127,8 @@ public class Table {
             setPieceIcon(chessBoard);
 
             addMouseListener(new MouseListener(){
-
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mouseClicked(final MouseEvent e) {
                     
                     if(SwingUtilities.isRightMouseButton(e)){
                         sourceTile = null;
@@ -136,29 +145,42 @@ public class Table {
                         }
                         else{
                             destinationTile = chessBoard.getTile(tileId);
-                            final Move move = null;
+                            final Move move = Move.MoveFactory.createMove(chessBoard, sourceTile.getTileCoordinate(), destinationTile.getTileCoordinate());
                             final MoveTransition transition = chessBoard.currentPlayer().makeMove(move);
                             if(transition.getMoveStatus().isDone()){
-                                //chessBoard = chessBoard.currentPlayer().makeMove(move);
+                                chessBoard = transition.getTransitionBoard();
+                                // TODO add move that was made to move log
                             }
+                            sourceTile = null;
+                            destinationTile = null;
+                            humanMovedPiece = null;
                         }
+                        SwingUtilities.invokeLater(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                System.out.println(chessBoard);
+                                System.out.println(chessBoard.currentPlayer());
+                                boardPanel.drawBoard(chessBoard);
+                            }
+                        });
                     }
                 }
 
                 @Override
-                public void mousePressed(MouseEvent e) {
+                public void mousePressed(final MouseEvent e) {
                 }
 
                 @Override
-                public void mouseReleased(MouseEvent e) {
+                public void mouseReleased(final MouseEvent e) {
                 }
 
                 @Override
-                public void mouseEntered(MouseEvent e) {
+                public void mouseEntered(final MouseEvent e) {
                 }
 
                 @Override
-                public void mouseExited(MouseEvent e) {
+                public void mouseExited(final MouseEvent e) {
                 }
 
             });
@@ -166,14 +188,21 @@ public class Table {
             validate();
         }
 
+        public void drawTile(final Board board){
+            setTileColour();
+            setPieceIcon(board);
+            validate();
+            repaint();
+        }
+
         private void setPieceIcon(final Board board){
             this.removeAll();
             if(board.getTile(this.tileId).isTileOccupied()){
                 try{
-                BufferedImage image = 
+                final BufferedImage image = 
                     ImageIO.read(new File(defaultPieceIconPath + board.getTile(this.tileId).getPiece().getPieceColour().toString().substring(0, 1).toLowerCase() + 
                     board.getTile(this.tileId).getPiece().toString() + ".png"));
-                    image = resize(image, 60, 60);
+                    // image = resize(image, 60, 60);
                     add(new JLabel(new ImageIcon(image)));
                 }
                 catch(IOException e){
