@@ -15,7 +15,11 @@ public class Pawn extends Piece{
     private final static int[] CANDIDATE_MOVE_COORDINATES = {8, 16, 7, 9};
 
     public Pawn(final Colour pieceColour, final int piecePosition) {
-        super(PieceType.PAWN, pieceColour, piecePosition);
+        super(PieceType.PAWN, pieceColour, piecePosition, true);
+    }
+
+    public Pawn(final Colour pieceColour, final int piecePosition, final boolean isFirstMove) {
+        super(PieceType.PAWN, pieceColour, piecePosition, isFirstMove);
     }
 
     @Override
@@ -35,12 +39,12 @@ public class Pawn extends Piece{
                 legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
             }
             else if(currentCandidateOffset == 16 && this.isFirstMove() && 
-                    (BoardUtils.SECOND_RANK[this.piecePosition] && this.getPieceColour().isBlack()) || 
-                    (BoardUtils.SEVENTH_RANK[this.piecePosition] && this.getPieceColour().isWhite())){
+                    ((BoardUtils.SECOND_RANK[this.piecePosition] && this.getPieceColour().isBlack()) || 
+                    (BoardUtils.SEVENTH_RANK[this.piecePosition] && this.getPieceColour().isWhite()))){
                 final int behindCandidateDestinationCoordinate = this.piecePosition + (this.pieceColour.getDirection() * 8);
                 if(!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() && 
-                    !board.getTile(candidateDestinationCoordinate).isTileOccupied()){
-                        legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
+                   !board.getTile(candidateDestinationCoordinate).isTileOccupied()){
+                        legalMoves.add(new PawnJump(board, this, candidateDestinationCoordinate));
                 }
             }
             // if pawn is on respective right hand side edge of board and isn't in an exception movement case
@@ -51,7 +55,7 @@ public class Pawn extends Piece{
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
                     if(this.pieceColour != pieceOnCandidate.getPieceColour()){
                         // TODO more here!
-                        legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
                     }
                 }
             }
@@ -63,7 +67,7 @@ public class Pawn extends Piece{
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
                     if(this.pieceColour != pieceOnCandidate.getPieceColour()){
                         // TODO more here!
-                        legalMoves.add(new NonAttackMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
                     }
                 }
             }

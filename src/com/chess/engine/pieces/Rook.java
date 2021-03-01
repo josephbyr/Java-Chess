@@ -16,7 +16,11 @@ public class Rook extends Piece{
     private final static int[] CANDIDATE_MOVE_COORDINATES = {-8, -1, 1, 8};
 
     public Rook(final Colour pieceColour, final int piecePosition) {
-        super(PieceType.ROOK, pieceColour, piecePosition);
+        super(PieceType.ROOK, pieceColour, piecePosition, true);
+    }
+
+    public Rook(final Colour pieceColour, final int piecePosition, final boolean isFirstMove) {
+        super(PieceType.ROOK, pieceColour, piecePosition, isFirstMove);
     }
 
     @Override

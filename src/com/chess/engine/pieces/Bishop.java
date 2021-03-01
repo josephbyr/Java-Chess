@@ -16,7 +16,11 @@ public class Bishop extends Piece{
     private final static int[] CANDIDATE_MOVE_COORDINATES = {-9, -7, 7, 9};
 
     public Bishop(final Colour pieceColour, final int piecePosition) {
-        super(PieceType.BISHOP, pieceColour, piecePosition);
+        super(PieceType.BISHOP, pieceColour, piecePosition, true);
+    }
+
+    public Bishop(final Colour pieceColour, final int piecePosition, final boolean isFirstMove) {
+        super(PieceType.BISHOP, pieceColour, piecePosition, isFirstMove);
     }
 
     @Override

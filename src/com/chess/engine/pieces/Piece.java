@@ -15,12 +15,12 @@ public abstract class Piece {
 
     Piece(final PieceType pieceType,
           final Colour pieceColour, 
-          final int piecePosition){
+          final int piecePosition,
+          final boolean isFirstMove){
         this.pieceType = pieceType;
         this.pieceColour = pieceColour;
         this.piecePosition = piecePosition;
-        // TODO more here!
-        this.isFirstMove = false;
+        this.isFirstMove = isFirstMove;
         this.cachedHashCode = computeHashCode();
     }
 
