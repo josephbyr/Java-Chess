@@ -36,6 +36,7 @@ import java.io.IOException;
 public class Table {
     
     private final JFrame gameFrame;
+    private final TakenPiecesPanel takenPiecesPanel;
     private final BoardPanel boardPanel;
     private Board chessBoard;
 
@@ -61,9 +62,11 @@ public class Table {
         this.gameFrame.setJMenuBar(menuBar);
         this.gameFrame.setSize(OUTER_FRAME_SIZE);
         this.chessBoard = Board.createInitialBoard();
+        this.takenPiecesPanel = new TakenPiecesPanel();
         this.boardPanel = new BoardPanel();
         this.boardDirection = BoardDirection.NORMAL;
         this.highlightLegalMoves = false;
+        this.gameFrame.add(this.takenPiecesPanel, BorderLayout.WEST);
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.setVisible(true);
     }
@@ -97,7 +100,7 @@ public class Table {
 
     public JMenu createPreferencesMenu(){
         final JMenu preferenceMenu = new JMenu("Preferences");
-        final JMenuItem flipBoardMenu = new JMenuItem("Flip Board");
+        final JMenuItem flipBoardMenu = new JMenuItem("Flip Board (Not working)");
         flipBoardMenu.addActionListener(new ActionListener(){
 
             @Override
@@ -178,6 +181,39 @@ public class Table {
             }
             validate();
             repaint();
+        }
+    }
+
+    public static class MoveLog{
+
+        private final List<Move> moves;
+
+        MoveLog(){
+            this.moves = new ArrayList<>();
+        }
+
+        public List<Move> getMoves(){
+            return this.moves;
+        }
+
+        public void assMove(final Move move){
+            this.moves.add(move);
+        }
+
+        public int size(){
+            return this.moves.size();
+        }
+
+        public void clear(){
+            this.moves.clear();
+        }
+
+        public Move removeMove(int index){
+            return this.moves.remove(index);
+        }
+
+        public boolean removeMove(final Move move){
+            return this.moves.remove(move);
         }
     }
 
