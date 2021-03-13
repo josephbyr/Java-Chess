@@ -198,6 +198,11 @@ public abstract class Move {
             builder.setMoveMaker(this.board.currentPlayer().getOpponent().getColour());
             return builder.build();
         }
+
+        @Override
+        public String toString(){
+            return BoardUtils.getPositionAtCoordinate(this.destinationCoordinate);
+        }
     }
 
     static abstract class CastleMove extends Move{
@@ -285,6 +290,11 @@ public abstract class Move {
         @Override
         public Board execute(){
             throw new RuntimeException("Cannot execute null move");
+        }
+
+        @Override
+        public int getCurrentCoordinate() {
+            return -1;
         }
     }
 

@@ -50,6 +50,9 @@ public class MoveLogPanel extends JPanel {
             final String moveText = lastMove.toString();
 
             if(lastMove.getMovedPiece().getPieceColour().isWhite()){
+                this.model.setValueAt(moveText + calculateCheckAndCheckMateHAsh(board), currRow, 0);
+            }
+            else if(lastMove.getMovedPiece().getPieceColour().isBlack()){
                 this.model.setValueAt(moveText + calculateCheckAndCheckMateHAsh(board), currRow - 1, 1);
             }
         }
@@ -119,6 +122,7 @@ public class MoveLogPanel extends JPanel {
             }
             if(column == 0){
                 currRow.setWhiteMove((String)aValue);
+                fireTableRowsInserted(row, row);
             }
             else if(column == 1){
                 currRow.setBlackMove((String)aValue);
