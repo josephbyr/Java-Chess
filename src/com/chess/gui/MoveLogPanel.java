@@ -18,7 +18,7 @@ public class MoveLogPanel extends JPanel {
 
     private final DataModel model;
     private final JScrollPane scrollPane;
-    private static final Dimension MOVE_LOG_SIZE = new Dimension(100, 400);
+    private static final Dimension LOG_PANEL_SIZE = new Dimension(100, 40);
 
     MoveLogPanel() {
         this.setLayout(new BorderLayout());
@@ -27,7 +27,7 @@ public class MoveLogPanel extends JPanel {
         table.setRowHeight(15);
         this.scrollPane = new JScrollPane(table);
         scrollPane.setColumnHeaderView(table.getTableHeader());
-        scrollPane.setPreferredSize(MOVE_LOG_SIZE);
+        scrollPane.setPreferredSize(LOG_PANEL_SIZE);
         this.add(scrollPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
