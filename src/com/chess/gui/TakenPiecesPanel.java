@@ -85,7 +85,7 @@ public class TakenPiecesPanel extends JPanel{
                 final BufferedImage image = ImageIO.read(new File("art/" + 
                     takenPiece.getPieceColour().toString().substring(0, 1).toLowerCase() + takenPiece.toString()  + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
-                final JLabel imageLabel = new JLabel();
+                final JLabel imageLabel = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(icon.getIconWidth() - 15, icon.getIconWidth() - 15, Image.SCALE_SMOOTH)));
                 this.bottomPanel.add(imageLabel);
             }
             catch(final IOException e){
@@ -98,7 +98,7 @@ public class TakenPiecesPanel extends JPanel{
                 final BufferedImage image = ImageIO.read(new File("art/" + 
                     takenPiece.getPieceColour().toString().substring(0, 1).toLowerCase() + takenPiece.toString()  + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
-                final JLabel imageLabel = new JLabel();
+                final JLabel imageLabel = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(icon.getIconWidth() - 15, icon.getIconWidth() - 15, Image.SCALE_SMOOTH)));
                 this.bottomPanel.add(imageLabel);
             }
             catch(final IOException e){

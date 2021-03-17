@@ -61,7 +61,6 @@ public abstract class Player {
         return this.legalMoves.contains(move);
     }
 
-    // TODO
     public boolean isInCheck(){
         return this.isInCheck;
     }

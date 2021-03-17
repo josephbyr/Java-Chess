@@ -207,11 +207,11 @@ public abstract class Move {
         }
     }
 
-    public static final class PawnEnPassantAttackMove extends PawnAttackMove{
+    public static class PawnEnPassantAttackMove extends PawnAttackMove{
         public PawnEnPassantAttackMove(final Board board, 
-                              final Piece movedPiece, 
-                              final int destinationCoordinate,
-                              final Piece attackedPiece){
+                                       final Piece movedPiece, 
+                                       final int destinationCoordinate,
+                                       final Piece attackedPiece){
             super(board, movedPiece, destinationCoordinate, attackedPiece);
         }
 
@@ -222,13 +222,13 @@ public abstract class Move {
 
         @Override
         public Board execute(){
-            final Builder builder = new Builder();
-            for(final Piece piece : board.currentPlayer().getActivePieces()){
-                if(!(this.movedPiece.equals(piece))){
+            final Board.Builder builder = new Builder();
+            for(final Piece piece : this.board.currentPlayer().getActivePieces()){
+                if(!this.movedPiece.equals(piece)){
                     builder.setPiece(piece);
                 }
             }
-            for(final Piece piece : this.board.currentPlayer().getActivePieces()){
+            for(final Piece piece : this.board.currentPlayer().getOpponent().getActivePieces()){
                 if(!piece.equals(this.getAttackedPiece())){
                     builder.setPiece(piece);
                 }
@@ -239,16 +239,21 @@ public abstract class Move {
         }
     }
 
-    public static final class PawnJump extends Move{
+    public static class PawnJump extends Move{
         public PawnJump(final Board board, 
-                        final Piece movedPiece, 
+                        final Pawn movedPiece, 
                         final int destinationCoordinate){
             super(board, movedPiece, destinationCoordinate);
         }
 
         @Override
+        public boolean equals(final Object other) {
+            return this == other || other instanceof PawnJump && super.equals(other);
+        }
+
+        @Override
         public Board execute(){
-            final Builder builder = new Builder();
+            final Board.Builder builder = new Builder();
             for(final Piece piece: this.board.currentPlayer().getActivePieces()){
                 if(!this.movedPiece.equals(piece)){
                     builder.setPiece(piece);
