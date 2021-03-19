@@ -16,7 +16,7 @@ public class BoardUtils {
     public static final boolean[] THIRD_RANK = initRow(16);
     public static final boolean[] FOURTH_RANK = initRow(24);
     public static final boolean[] FIFTH_RANK = initRow(32);
-    public static final boolean[] SIXTH_RANK = initRow(48);
+    public static final boolean[] SIXTH_RANK = initRow(40);
     public static final boolean[] SEVENTH_RANK = initRow(48);
     public static final boolean[] EIGHTH_RANK = initRow(56);
 
@@ -59,12 +59,21 @@ public class BoardUtils {
     }
 
     // sets all squares in given row to true
-    private static boolean[] initRow(int rowNum){
+    // public static boolean[] initRow(int rowNum){
+    //     final boolean[] row = new boolean[NUM_TILES];
+    //     while (rowNum % NUM_TILES != 0){
+    //         row[rowNum] = true;
+    //         rowNum ++;
+    //     }
+    //     return row;
+    // }
+
+    private static boolean [] initRow(int rowNum) {
         final boolean[] row = new boolean[NUM_TILES];
-        while (rowNum % NUM_TILES != 0){
+        do {
             row[rowNum] = true;
-            rowNum ++;
-        }
+            rowNum++;
+        } while(rowNum % NUM_TILES_PER_RANK != 0);
         return row;
     }
 
