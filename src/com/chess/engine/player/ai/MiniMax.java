@@ -9,7 +9,7 @@ public class MiniMax implements MoveStrategy {
     private final Evaluator evaluator;
 
     public MiniMax() {
-        this.evaluator = null;
+        this.evaluator = new StandardEvaluator();
     }
 
     @Override
