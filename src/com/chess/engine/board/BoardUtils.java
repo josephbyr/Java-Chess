@@ -27,9 +27,9 @@ public class BoardUtils {
     public static final int NUM_TILES_PER_RANK = 8;
 
     // sets all squares in given column to true
-    private static boolean[] initColumn(int colNum){
+    private static boolean[] initColumn(int colNum) {
         final boolean[] col = new boolean[NUM_TILES];
-        while (colNum < NUM_TILES){
+        while (colNum < NUM_TILES) {
             col[colNum] = true;
             colNum += NUM_TILES_PER_RANK;
         }
@@ -39,45 +39,39 @@ public class BoardUtils {
     private static Map<String, Integer> initPositionToCoordinateMap() {
         final Map<String, Integer> positionToCoordinate = new HashMap<>();
 
-        for(int i = 0; i < NUM_TILES; i++){
+        for (int i = 0; i < NUM_TILES; i++) {
             positionToCoordinate.put(ALGEBRAIC_NOTATION[i], i);
         }
         return ImmutableMap.copyOf(positionToCoordinate);
     }
 
     private static String[] initAlgebraicNotation() {
-        return new String[] {
-            "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-            "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-            "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
-            "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-            "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-            "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-            "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
-            "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
-        };
+        return new String[] { "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "a7", "b7", "c7", "d7", "e7", "f7", "g7",
+                "h7", "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6", "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
+                "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4", "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", "a2",
+                "b2", "c2", "d2", "e2", "f2", "g2", "h2", "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1" };
     }
 
     // sets all squares in given row to true
     // public static boolean[] initRow(int rowNum){
-    //     final boolean[] row = new boolean[NUM_TILES];
-    //     while (rowNum % NUM_TILES != 0){
-    //         row[rowNum] = true;
-    //         rowNum ++;
-    //     }
-    //     return row;
+    // final boolean[] row = new boolean[NUM_TILES];
+    // while (rowNum % NUM_TILES != 0){
+    // row[rowNum] = true;
+    // rowNum ++;
+    // }
+    // return row;
     // }
 
-    private static boolean [] initRow(int rowNum) {
+    private static boolean[] initRow(int rowNum) {
         final boolean[] row = new boolean[NUM_TILES];
         do {
             row[rowNum] = true;
             rowNum++;
-        } while(rowNum % NUM_TILES_PER_RANK != 0);
+        } while (rowNum % NUM_TILES_PER_RANK != 0);
         return row;
     }
 
-    private BoardUtils(){
+    private BoardUtils() {
         throw new RuntimeException("This class cannot be instansiated");
     }
 

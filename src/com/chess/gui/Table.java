@@ -34,7 +34,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Table {
-    
+
     private final JFrame gameFrame;
     private final TakenPiecesPanel takenPiecesPanel;
     private final MoveLogPanel moveLogPanel;
@@ -57,7 +57,7 @@ public class Table {
     private final Color lightTileColour = Color.decode("#F0D9B5");
     private final Color darkTileColour = Color.decode("#946f51");
 
-    public Table(){
+    public Table() {
         this.gameFrame = new JFrame("Chess");
         this.gameFrame.setLayout(new BorderLayout());
         final JMenuBar menuBar = new JMenuBar();
@@ -77,15 +77,15 @@ public class Table {
         this.gameFrame.setVisible(true);
     }
 
-    private void createMenuBar(final JMenuBar menuBar){
+    private void createMenuBar(final JMenuBar menuBar) {
         menuBar.add(createFileMenu());
         menuBar.add(createPreferencesMenu());
     }
 
-    private JMenu createFileMenu(){
+    private JMenu createFileMenu() {
         final JMenu fileMenu = new JMenu("File");
         final JMenuItem openPGN = new JMenuItem("Load PGN File");
-        openPGN.addActionListener(new ActionListener(){
+        openPGN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open PGN file");
@@ -94,7 +94,7 @@ public class Table {
         fileMenu.add(openPGN);
 
         final JMenuItem exitMenuitem = new JMenuItem("Exit");
-        exitMenuitem.addActionListener(new ActionListener(){
+        exitMenuitem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -104,10 +104,10 @@ public class Table {
         return fileMenu;
     }
 
-    public JMenu createPreferencesMenu(){
+    public JMenu createPreferencesMenu() {
         final JMenu preferenceMenu = new JMenu("Preferences");
         final JMenuItem flipBoardMenu = new JMenuItem("Flip Board (Not working)");
-        flipBoardMenu.addActionListener(new ActionListener(){
+        flipBoardMenu.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -118,13 +118,13 @@ public class Table {
         preferenceMenu.add(flipBoardMenu);
         preferenceMenu.addSeparator();
         final JCheckBoxMenuItem highlightLegalMovesCheckBox = new JCheckBoxMenuItem("Highlight Legal Moves", false);
-        highlightLegalMovesCheckBox.addActionListener(new ActionListener(){
+        highlightLegalMovesCheckBox.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 highlightLegalMoves = highlightLegalMovesCheckBox.isSelected();
             }
-            
+
         });
         preferenceMenu.add(highlightLegalMovesCheckBox);
         return preferenceMenu;
@@ -132,8 +132,8 @@ public class Table {
 
     // Not working
     public enum BoardDirection {
-        
-        NORMAL{
+
+        NORMAL {
 
             @Override
             List<TilePanel> traverse(List<TilePanel> boardTiles) {
@@ -146,7 +146,7 @@ public class Table {
             }
 
         },
-        FLIPPED{
+        FLIPPED {
 
             @Override
             List<TilePanel> traverse(List<TilePanel> boardTiles) {
@@ -161,16 +161,17 @@ public class Table {
         };
 
         abstract List<TilePanel> traverse(final List<TilePanel> boardTiles);
+
         abstract BoardDirection opposite();
     }
 
-    private class BoardPanel extends JPanel{
+    private class BoardPanel extends JPanel {
         final List<TilePanel> boardTiles;
 
-        BoardPanel(){
+        BoardPanel() {
             super(new GridLayout(8, 8));
             this.boardTiles = new ArrayList<>();
-            for(int i = 0; i < BoardUtils.NUM_TILES; i++){
+            for (int i = 0; i < BoardUtils.NUM_TILES; i++) {
                 final TilePanel tilePanel = new TilePanel(this, i);
                 this.boardTiles.add(tilePanel);
                 add(tilePanel);
@@ -179,9 +180,9 @@ public class Table {
             validate();
         }
 
-        public void drawBoard(final Board board){
+        public void drawBoard(final Board board) {
             removeAll();
-            for(final TilePanel tilePanel : boardTiles){
+            for (final TilePanel tilePanel : boardTiles) {
                 tilePanel.drawTile(board);
                 add(tilePanel);
             }
@@ -190,72 +191,71 @@ public class Table {
         }
     }
 
-    public static class MoveLog{
+    public static class MoveLog {
 
         private final List<Move> moves;
 
-        MoveLog(){
+        MoveLog() {
             this.moves = new ArrayList<>();
         }
 
-        public List<Move> getMoves(){
+        public List<Move> getMoves() {
             return this.moves;
         }
 
-        public void addMove(final Move move){
+        public void addMove(final Move move) {
             this.moves.add(move);
         }
 
-        public int size(){
+        public int size() {
             return this.moves.size();
         }
 
-        public void clear(){
+        public void clear() {
             this.moves.clear();
         }
 
-        public Move removeMove(int index){
+        public Move removeMove(int index) {
             return this.moves.remove(index);
         }
 
-        public boolean removeMove(final Move move){
+        public boolean removeMove(final Move move) {
             return this.moves.remove(move);
         }
     }
 
-    private class TilePanel extends JPanel{
+    private class TilePanel extends JPanel {
 
         private final int tileId;
 
-        TilePanel(final BoardPanel boardPanel, final int tileId){
+        TilePanel(final BoardPanel boardPanel, final int tileId) {
             super(new GridBagLayout());
             this.tileId = tileId;
             setPreferredSize(TILE_PANEL_SIZE);
             setTileColour();
             setPieceIcon(chessBoard);
 
-            addMouseListener(new MouseListener(){
+            addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
-                    
-                    if(SwingUtilities.isRightMouseButton(e)){
+
+                    if (SwingUtilities.isRightMouseButton(e)) {
                         sourceTile = null;
                         destinationTile = null;
                         humanMovedPiece = null;
-                    }
-                    else if(SwingUtilities.isLeftMouseButton(e)){
-                        if(sourceTile == null){
+                    } else if (SwingUtilities.isLeftMouseButton(e)) {
+                        if (sourceTile == null) {
                             sourceTile = chessBoard.getTile(tileId);
                             humanMovedPiece = sourceTile.getPiece();
-                            if(humanMovedPiece == null){
+                            if (humanMovedPiece == null) {
                                 sourceTile = null;
                             }
-                        }
-                        else{
+                        } else {
                             destinationTile = chessBoard.getTile(tileId);
-                            final Move move = Move.MoveFactory.createMove(chessBoard, sourceTile.getTileCoordinate(), destinationTile.getTileCoordinate());
+                            final Move move = Move.MoveFactory.createMove(chessBoard, sourceTile.getTileCoordinate(),
+                                    destinationTile.getTileCoordinate());
                             final MoveTransition transition = chessBoard.currentPlayer().makeMove(move);
-                            if(transition.getMoveStatus().isDone()){
+                            if (transition.getMoveStatus().isDone()) {
                                 chessBoard = transition.getTransitionBoard();
                                 moveLog.addMove(move);
                             }
@@ -298,7 +298,7 @@ public class Table {
             validate();
         }
 
-        public void drawTile(final Board board){
+        public void drawTile(final Board board) {
             setTileColour();
             setPieceIcon(board);
             highlightLegalMoves(board);
@@ -306,41 +306,41 @@ public class Table {
             repaint();
         }
 
-        private void setPieceIcon(final Board board){
+        private void setPieceIcon(final Board board) {
             this.removeAll();
-            if(board.getTile(this.tileId).isTileOccupied()){
-                try{
-                final BufferedImage image = 
-                    ImageIO.read(new File(defaultPieceIconPath + board.getTile(this.tileId).getPiece().getPieceColour().toString().substring(0, 1).toLowerCase() + 
-                    board.getTile(this.tileId).getPiece().toString() + ".png"));
+            if (board.getTile(this.tileId).isTileOccupied()) {
+                try {
+                    final BufferedImage image = ImageIO
+                            .read(new File(defaultPieceIconPath
+                                    + board.getTile(this.tileId).getPiece().getPieceColour().toString().substring(0, 1)
+                                            .toLowerCase()
+                                    + board.getTile(this.tileId).getPiece().toString() + ".png"));
                     // image = resize(image, 60, 60);
                     add(new JLabel(new ImageIcon(image)));
-                }
-                catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
 
-        public BufferedImage resize(BufferedImage img, int newW, int newH) { 
+        public BufferedImage resize(BufferedImage img, int newW, int newH) {
             Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
             BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-        
+
             Graphics2D g2d = dimg.createGraphics();
             g2d.drawImage(tmp, 0, 0, null);
             g2d.dispose();
-        
+
             return dimg;
         }
 
-        private void highlightLegalMoves(final Board board){
-            if(highlightLegalMoves){
-                for(final Move move: pieceLegalMoves(board)){
-                    if(move.getDestinationCoordinate() == this.tileId){
-                        try{
+        private void highlightLegalMoves(final Board board) {
+            if (highlightLegalMoves) {
+                for (final Move move : pieceLegalMoves(board)) {
+                    if (move.getDestinationCoordinate() == this.tileId) {
+                        try {
                             add(new JLabel(new ImageIcon(ImageIO.read(new File("art/green_dot.png")))));
-                        }
-                        catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -348,8 +348,8 @@ public class Table {
             }
         }
 
-        private Collection<Move> pieceLegalMoves(final Board board){
-            if(humanMovedPiece != null && humanMovedPiece.getPieceColour() == board.currentPlayer().getColour()){
+        private Collection<Move> pieceLegalMoves(final Board board) {
+            if (humanMovedPiece != null && humanMovedPiece.getPieceColour() == board.currentPlayer().getColour()) {
                 return humanMovedPiece.calcLegalMoves(board);
             }
             return Collections.emptyList();

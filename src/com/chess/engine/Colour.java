@@ -8,7 +8,7 @@ import com.chess.engine.player.WhitePlayer;
 public enum Colour {
     WHITE {
         @Override
-        public int getDirection(){
+        public int getDirection() {
             return -1;
         }
 
@@ -39,7 +39,7 @@ public enum Colour {
     },
     BLACK {
         @Override
-        public int getDirection(){
+        public int getDirection() {
             return 1;
         }
 
@@ -70,9 +70,14 @@ public enum Colour {
     };
 
     public abstract int getDirection();
+
     public abstract int getOppositeDirection();
+
     public abstract boolean isWhite();
+
     public abstract boolean isBlack();
+
     public abstract boolean isPromoSquare(int position);
-	public abstract Player choosePlayer(WhitePlayer whitePlayer, BlackPlayer blackPlayer);
+
+    public abstract Player choosePlayer(WhitePlayer whitePlayer, BlackPlayer blackPlayer);
 }
