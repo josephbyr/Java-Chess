@@ -26,7 +26,7 @@ public class MiniMax {
         int lowestVal = Integer.MAX_VALUE;
         int currVal = 0;
 
-        System.out.println(board.currentPlayer() + "calculating with depth " + depth);
+        System.out.println(board.currentPlayer() + " calculating with depth " + depth);
 
         int numMoves = board.currentPlayer().getLegalMoves().size();
 
